@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const UserModel = require('../models/user-model');
 const CryptoJS = require('crypto-js');
+const cors = require('cors');
+const { ObjectId } = require('mongodb');
+router.use(cors ());
 
 
 
@@ -37,12 +40,12 @@ router.post('/login', async (req,res) => {
   console.log(email, password)
 
   const loggedinUser = await UserModel.findOne({email: email})
-  //console.log(loggedinUser);
+  console.log(loggedinUser);
 
   if(CryptoJS.SHA3(password).toString() === loggedinUser.password){
     res.json({email: loggedinUser.email, id: loggedinUser._id})
   } else {
-    console.log('fel')
+    res.status(401)
   }
   return;
 })

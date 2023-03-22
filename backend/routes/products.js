@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const ProductModel = require('../models/product-model');
+const cors = require('cors');
+
+router.use(cors ());
 
 /* GET users listing. */
 //router.get('/', function(req, res, next) {
@@ -10,7 +13,7 @@ const ProductModel = require('../models/product-model');
 //Hämta alla produkter
 router.get('/', async (req, res) => {
   const products = await ProductModel.find();
-  console.log(products)
+  //console.log(products)
   res.json(products);
 });
 
@@ -26,7 +29,7 @@ router.post('/add', async (req,res) =>{
   //console.log(req.body)
   let newProduct = new ProductModel(req.body);
   await newProduct.save();
-  console.log(newProduct);
+  //console.log(newProduct);
   res.send(newProduct)
 });
 
