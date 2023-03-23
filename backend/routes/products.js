@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const ProductModel = require('../models/product-model');
 const cors = require('cors');
+const { ObjectId } = require('mongodb');
 
 router.use(cors ());
 
@@ -19,8 +20,10 @@ router.get('/', async (req, res) => {
 
 //hämta specifik produkt
 
-router.get('/:productId', async (req, res, next) => {
-  const product = await ProductModel.findOne({})
+router.get('/:productId', async (req, res) => {
+  productId = req.params.productId
+  
+  const product = await ProductModel.findOne({"_id": new ObjectId(productId)})
     res.json(product)
   })
   

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const OrdersModel = require('../models/order-model');
 const ProductModel = require('../models/product-model');
+const cors = require('cors');
+router.use(cors);
 
 /* GET users listing. */
 router.get('/', async(req, res, next) =>{
@@ -11,7 +13,7 @@ router.get('/', async(req, res, next) =>{
 //skapa order för specifik user
 router.post('/add', async (req,res) => {
     const orders = await OrdersModel.create(req.body);
-    //console.log(orders.products)
+    console.log(orders.products)
     const products = orders.products
 
     products.forEach(async ({productId, quantity}) => {

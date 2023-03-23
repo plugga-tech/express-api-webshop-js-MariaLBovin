@@ -43,7 +43,7 @@ router.post('/login', async (req,res) => {
   console.log(loggedinUser);
 
   if(CryptoJS.SHA3(password).toString() === loggedinUser.password){
-    res.json({email: loggedinUser.email, id: loggedinUser._id})
+    res.json({email: loggedinUser.email, id: loggedinUser._id, name: loggedinUser.name})
   } else {
     res.status(401)
   }
