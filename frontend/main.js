@@ -4,7 +4,6 @@ import  printProducts from "./js/productfunctions.js";
 
 
 function init () {
-    createLogin ();
     createUser ();
     printProducts ()
 };

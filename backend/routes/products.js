@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const ProductModel = require('../models/product-model');
-const cors = require('cors');
 const { ObjectId } = require('mongodb');
+const cors = require('cors');
+
 
 router.use(cors ());
 
@@ -26,14 +27,28 @@ router.get('/:productId', async (req, res) => {
   const product = await ProductModel.findOne({"_id": new ObjectId(productId)})
     res.json(product)
   })
+
+// hämta produkter från specifik kategori
+router.get('/category/:id', async (req, res) => {
+  const categoryId = req.params.id
+  
+  const category = await ProductModel.find({category: categoryId}).populate('category')
+    //console.log(category)
+    res.json(category)
+  })
   
 //lägger till nya produkter
 router.post('/add', async (req,res) =>{ 
-  //console.log(req.body)
-  let newProduct = new ProductModel(req.body);
-  await newProduct.save();
+  const token = req.body.token
+
+  if(token === '1234key1234') {
+    let newProduct = await ProductModel.create(req.body);
   //console.log(newProduct);
   res.send(newProduct)
+  } else {
+    res.status(400).json('Du har inte behörighet att göra den ändringen')
+  }
+  
 });
 
 

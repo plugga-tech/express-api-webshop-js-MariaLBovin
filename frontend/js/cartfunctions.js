@@ -1,9 +1,4 @@
-import createOrder from "./orderfunctions.js";
-import createLogin, { createUser } from "./loginfunctions.js";
-
 const renderdCartPlacement = document.querySelector('.rendered-cart-section')
-
-//let itemsInCart = [];
 
 let itemsInCart =  JSON.parse(localStorage.getItem('Cart')) || [];
 updateCart();
@@ -28,7 +23,7 @@ export function addItemToCart (productId){
 }
 
 export function renderCartItems() {
-    //console.log(itemsInCart);
+    ////console.log(itemsInCart);
     const cartItems = document.createElement("ul");
     
     renderdCartPlacement.innerHTML = "";

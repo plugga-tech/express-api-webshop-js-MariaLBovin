@@ -1,8 +1,6 @@
-import itemsInCart from './cartfunctions.js';
+const ordersPlacement = document.querySelector('.orders-section');
 
 export function createOrder () {
-    const orderBtn = document.createElement("button");
-    orderBtn.innerText = "Beställ";
     //console.log('test');
     let userObject = JSON.parse(localStorage.getItem('User'));
     //console.log(userObject)
@@ -32,9 +30,34 @@ export function createOrder () {
         })
     .then(res => res.json())
     .then(data => {
-        console.log(data)
+        ordersPlacement.innerText = 'Tack för din beställning'
     })
-
+    
+    viewAllOrders();
 }
+
+function viewAllOrders () {
+    let userObject = localStorage.getItem('User');
+    let userId = userObject.id
+    
+
+    //console.log(userId);
+
+    fetch('http://localhost:3000/api/orders/userOrder', {
+        method: "POST",
+        headers: {
+                "Content-type": "application/json"
+                },
+        body: JSON.stringify(userId)
+        })
+    .then(res => res.json())
+    .then(data => {
+        //console.log({productId: data._id})
+        let productId = {productId: data._id}
+
+    })
+    
+}
+
 
 export default createOrder;

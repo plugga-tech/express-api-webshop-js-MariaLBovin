@@ -11,12 +11,12 @@ router.use(cors ());
 //ska hämta alla användares namn, email och id. INTE LÖSENORD
 router.get('/', async (req, res) => {
   const users = await UserModel.find({}).select('name email');
-  console.log(users)
+  //console.log(users)
   res.json(users);
 });
 
 //hämtar unik användare
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res,) => {
   const user = await UserModel.findOne({})
     res.json(user)
   })
@@ -30,22 +30,22 @@ router.post('/add', async (req,res) =>{
   newUser.password = newPassword;
 
   const saveUser = await UserModel.create(newUser)
-  console.log(saveUser);
+  //console.log(saveUser);
   res.send(saveUser)
 });
 
 //loggar in användare
 router.post('/login', async (req,res) => {
   const {email, password} = req.body;
-  console.log(email, password)
+  //console.log(email, password)
 
   const loggedinUser = await UserModel.findOne({email: email})
-  console.log(loggedinUser);
+  //console.log(loggedinUser);
 
   if(CryptoJS.SHA3(password).toString() === loggedinUser.password){
     res.json({email: loggedinUser.email, id: loggedinUser._id, name: loggedinUser.name})
   } else {
-    res.status(401)
+    res.status(401).json('Fel lösenord eller användarnamn')
   }
   return;
 })
