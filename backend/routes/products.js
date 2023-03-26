@@ -14,7 +14,7 @@ router.use(cors ());
 
 //Hämta alla produkter
 router.get('/', async (req, res) => {
-  const products = await ProductModel.find();
+  const products = await ProductModel.find().populate('category');
   //console.log(products)
   res.json(products);
 });
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 router.get('/:productId', async (req, res) => {
   productId = req.params.productId
   
-  const product = await ProductModel.findOne({"_id": new ObjectId(productId)})
+  const product = await ProductModel.findOne({"_id": new ObjectId(productId)}).populate('category')
     res.json(product)
   })
 

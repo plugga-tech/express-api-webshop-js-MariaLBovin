@@ -12,7 +12,8 @@ router.get('/', async(req, res, next) =>{
 
 //skapa order för specifik user
 router.post('/add', async (req,res) => {
-    const orders = await OrdersModel.create(req.body);
+    const orders = await OrdersModel.create(req.body)
+    //orders.populate({path: 'products.productId', model: 'products'}).populate('user');
     //console.log(orders.user)
     const products = orders.products
     //console.log(products)
@@ -37,7 +38,7 @@ router.get('/all/:token', async (req, res) => {
     const token = req.params.token;
 
     if(token === '1234key1234'){
-      const orders = await OrdersModel.find();
+      const orders = await OrdersModel.find().populate('products.productId');
       res.json(orders);
     } else {
       res.status(401).json('Du har inte åtkomst')
@@ -47,9 +48,10 @@ router.get('/all/:token', async (req, res) => {
 
 router.post('/user', async (req, res,) => {
     const token = req.body.token;
+    const user = req.body.user
 
     if(token === '1234key1234'){
-      const userOrder = await OrdersModel.findOne({}).populate('products')
+      const userOrder = await OrdersModel.find({user}).populate({path: 'products.productId', model: 'products'}).populate('user')
       res.json(userOrder)
     } else {
       res.status(401).json('Du har inte åtkomst')
@@ -58,11 +60,11 @@ router.post('/user', async (req, res,) => {
   
 })
 
-// router.post('/userOrder', async (req, res) => {
-//   const order = await OrdersModel.findOne({}).populate('products')
-
-//   res.json(order);
-// })
+router.post('/userOrder', async (req, res) => {
+  const user = req.body.user
+  const userOrder = await OrdersModel.find({user}).populate({path: 'products.productId', model: 'products'}).populate('user')
+      res.json(userOrder)
+})
 
 
 

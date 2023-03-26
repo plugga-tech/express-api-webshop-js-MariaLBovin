@@ -30,34 +30,71 @@ export function createOrder () {
         })
     .then(res => res.json())
     .then(data => {
+        console.log(data);
+        // data.forEach(order => {
+        //     //console.log(order.products)
+        //     const products = order.products
+        //     products.forEach(product=> {
+        //         console.log(product.productId.name)
+        //         const productName = product.productId.name;
+        //         console.log(productName)
+
+        //     })
+
+        // });
+        
         ordersPlacement.innerText = 'Tack för din beställning'
     })
     
-    viewAllOrders();
+    ;
+}
+export function createViewAllOrdersBtn () {
+    const viewOrdersBtn = document.createElement('button');
+    viewOrdersBtn.innerText = 'se mina ordrar';
+    ordersPlacement.appendChild(viewOrdersBtn)
+    viewOrdersBtn.addEventListener('click', viewAllOrders)
 }
 
+
 function viewAllOrders () {
-    let userObject = localStorage.getItem('User');
-    let userId = userObject.id
+    let userObject = JSON.parse(localStorage.getItem('User'));
+    let userId = {user: userObject.id}
     
 
-    //console.log(userId);
+    console.log(userId);
 
     fetch('http://localhost:3000/api/orders/userOrder', {
         method: "POST",
         headers: {
-                "Content-type": "application/json"
-                },
+          "Content-type": "application/json"
+        },
         body: JSON.stringify(userId)
-        })
-    .then(res => res.json())
-    .then(data => {
-        //console.log({productId: data._id})
-        let productId = {productId: data._id}
+      })
+      .then(res => res.json())
+      .then(data => {
+        const productUl = document.createElement('ul')
+        ordersPlacement.appendChild(productUl)
+        console.log(productUl)
+        data.forEach(order => {
+            //console.log(order.products)
+            const products = order.products
+            products.forEach(product=> {
+                const li = document.createElement('li');
+                
+                li.innerText = product.productId.name
+                console.log(li.innerText)
+                productUl.appendChild(li);
+            //     //console.log(product.productId.name)
+            //         ordersPlacement.innerHTML = `<p>${product.productId.name}</p>`
+                
+                
+             })
 
-    })
+        });
+        
+      });
     
 }
 
 
-export default createOrder;
+export default createOrder; createViewAllOrdersBtn

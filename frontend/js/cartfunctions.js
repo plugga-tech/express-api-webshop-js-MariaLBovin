@@ -1,3 +1,5 @@
+import { createOrderBtn } from "./loginfunctions.js";
+
 const renderdCartPlacement = document.querySelector('.rendered-cart-section')
 
 let itemsInCart =  JSON.parse(localStorage.getItem('Cart')) || [];
@@ -56,8 +58,6 @@ export function renderCartItems() {
   
     localStorage.setItem('Cart', JSON.stringify(itemsInCart));
     
-    //renderTotalSum();
-
   }
 function updateCart () {
   renderCartItems();
@@ -78,19 +78,19 @@ function renderTotalSum () {
 }
 
 export function changeValue(action, productId) {
-    //console.log(action, productId);
+    console.log(action, productId);
     itemsInCart = itemsInCart.map((item) => {
         let firstValue = item.quantity;
         let stock = item.lager
-        //console.log(firstValue, stock);
+        console.log(firstValue, stock);
 
         if(item._id === productId ){
-            //console.log(item._id)
+            console.log(item._id)
             if(action === 'minus' && firstValue > 0){
-                //console.log(action)
+                console.log(action)
                 firstValue--
             }else if (action === 'plus' && firstValue < stock){
-                //console.log(action)
+                console.log(action)
                 firstValue++
            }
         }

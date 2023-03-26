@@ -5,26 +5,11 @@ const greeting = document.querySelector('.greeting-p');
 const sumPlacement = document.querySelector('.totalamount');
 const createUserFields = document.querySelector('.create-user');
 
-let loggedInUser = JSON.parse(localStorage.getItem('User'));
-//console.log(loggedInUser.name)
-
-if(loggedInUser){
-    createOrderBtn();
-    //console.log(createOrderBtn)
-    greeting.innerText ='Välkommen ' + loggedInUser.name;
-    loginFields.classList.add('display-none');
-    createUserFields.classList.add('display-none');
-    if (createUserFields) {
-        createUserFields.classList.add('display-none');
-    }
-} else {
-    createLogin();
-}
-
 export function createOrderBtn() {
+    console.log(sumPlacement);
     const orderBtn = document.createElement("button");
     orderBtn.innerText = 'beställ';
-    greeting.appendChild(orderBtn);
+    sumPlacement.appendChild(orderBtn);
     orderBtn.addEventListener("click", createOrder);
 }
 
@@ -64,9 +49,9 @@ export function createUser () {
 
         })
     })
-    if (loggedInUser) {
-        createUserFields.classList.remove('create-user');
-    }
+    // if (loggedInUser) {
+    //     createUserFields.classList.remove('create-user');
+    // }
 }
 
 export function createLogin () {
@@ -98,8 +83,8 @@ export function createLogin () {
                 if(data.email){
                     greeting.innerText = 'Välkommen ' + data.name;
                     localStorage.setItem('User', JSON.stringify(data));
-                    loginFields.classList.add('display-none');
-                    createUserFields.classList.add('display-none');
+                    //loginFields.classList.add('display-none');
+                    //createUserFields.classList.add('display-none');
                     createOrderBtn();
                     //console.log(createOrderBtn)
                 }else {
@@ -115,4 +100,4 @@ export function createLogin () {
 
 }
 
-export default createLogin; createUser; createOrderBtn;
+export default createLogin; createUser; ;

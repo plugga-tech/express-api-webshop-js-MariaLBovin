@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
-const OrderSchema = mongoose.Schema;
+const { Schema} = mongoose
 
-const newOrder = new OrderSchema({
+
+const OrderSchema = new Schema({
     user: {
         type: String, 
         required: true
@@ -22,4 +23,4 @@ const newOrder = new OrderSchema({
 
 })
 
-module.exports = mongoose.model('orders', newOrder)
+module.exports = mongoose.model('order', OrderSchema)
